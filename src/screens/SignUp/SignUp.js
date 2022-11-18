@@ -7,13 +7,18 @@ import {
   Text,
   Pressable,
 } from 'react-native';
-import validations from './validations';
 import LinearGradient from 'react-native-linear-gradient';
+import validations from './validations';
+import {useSelector, useDispatch} from 'react-redux';
+import {signUp} from '../../store/userStore';
 
 export default function Signup() {
-  const userData = useState({email: '', password: ''});
+  const dispatch = useDispatch();
+  const email = useSelector(state => state.userStore.email);
+  const password = useSelector(state => state.userStore.password);
+
   const handleSubmit = () => {
-    console.log('111');
+    dispatch(signUp(email, password));
   };
 
   return (
@@ -36,20 +41,23 @@ export default function Signup() {
         <View style={styles.container}>
           <TextInput
             style={styles.inputbox}
-            value={userData.email}
+            value={email}
+            onChangeText={text => setEmail(text)}
             placeholder="e-mail"
             autoCapitalize={'none'}
             keyboardType={'email-address'}
           />
           <TextInput
             style={styles.inputbox}
-            value={userData.password}
+            value={password}
+            onChangeText={text => setPassword(text)}
             placeholder="password"
             autoCapitalize={'none'}
           />
           <TextInput
             style={styles.inputbox}
-            value={userData.passwordConfirm}
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
             placeholder="confirm password"
             autoCapitalize={'none'}
           />
